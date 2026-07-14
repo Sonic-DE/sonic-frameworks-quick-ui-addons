@@ -5,6 +5,8 @@ cmake_minimum_required(VERSION 3.20)
 
 project(kirigami-addons VERSION 1.12.1)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 include(FeatureSummary)
 
 set(AUTOMOC_MOC_OPTIONS -Muri=org.kde.kirigami)

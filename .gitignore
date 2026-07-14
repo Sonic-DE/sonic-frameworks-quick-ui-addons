@@ -10,3 +10,4 @@
 /.vscode/
 CMakeLists.txt.user
 build
+.ccls-cache
