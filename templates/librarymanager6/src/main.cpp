@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
     QQuickStyle::setStyle(QStringLiteral("org.kde.breeze"));
 #else
     KIconTheme::initTheme();
-    QIcon::setFallbackThemeName("breeze"_L1);
+    QIcon::setFallbackThemeName("silver"_L1);
     QApplication app(argc, argv);
 
     // Default to org.kde.desktop style unless the user forces another style
@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
         freopen("CONOUT$", "w", stderr);
     }
 
-    QApplication::setStyle(QStringLiteral("breeze"));
+    QApplication::setStyle(QStringLiteral("silver"));
     auto font = app.font();
     font.setPointSize(10);
     app.setFont(font);

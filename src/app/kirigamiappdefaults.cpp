@@ -52,14 +52,14 @@ void apply(QGuiApplication *app)
     // Icons ought to be included with the app on CMake
     QQuickStyle::setStyle(u"org.kde.breeze"_s);
 #else
-    // Ensure breeze is the fallback, to make sure all icons are found and no awkward empty spaces.
-    QIcon::setFallbackThemeName("breeze"_L1);
+    // Ensure silver is the fallback, to make sure all icons are found and no awkward empty spaces.
+    QIcon::setFallbackThemeName("silver"_L1);
     // Default to org.kde.desktop style unless the user forces another style
     bool handledByQPT = INITIAL_STYLE != QQuickStyle::name();
     if (qEnvironmentVariableIsEmpty("QT_QUICK_CONTROLS_STYLE") && !handledByQPT) {
         QQuickStyle::setStyle(u"org.kde.desktop"_s);
         // TODO remove once we no longer use the org.kde.desktop style
-        qApp->setStyle(QStyleFactory::create(QStringLiteral("Breeze")));
+        qApp->setStyle(QStyleFactory::create(QStringLiteral("Silver")));
     }
     KIconTheme::initTheme();
 #ifdef Q_OS_WINDOWS
