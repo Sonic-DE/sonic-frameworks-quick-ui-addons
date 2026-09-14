@@ -9,7 +9,7 @@ include(FeatureSummary)
 
 set(QT6_MIN_VERSION 6.8.0)
 set(KF6_MIN_VERSION 6.12.0)
-set(KIRIGAMI_ADDONS_MIN_VERSION 1.10.0)
+set(KIRIGAMI_ADDONS_MIN_VERSION 1.14.0)
 
 find_package(ECM ${KF6_MIN_VERSION} REQUIRED NO_MODULE)
 
@@ -51,7 +51,7 @@ set_package_properties(KF6KirigamiAddons PROPERTIES
 )
 
 ecm_find_qmlmodule(org.kde.kirigamiaddons.formcard)
-ecm_find_qmlmodule(org.kde.kirigamiaddons.statefulapp)
+ecm_find_qmlmodule(org.kde.kirigamiaddons.actions)
 
 add_subdirectory(src)
 
