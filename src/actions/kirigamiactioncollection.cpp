@@ -288,6 +288,7 @@ void KirigamiActionCollection::insertQmlMenu(ActionMenu *menu)
     connect(menu, &ActionMenu::nameChanged, this, &KirigamiActionCollection::menusChanged, Qt::UniqueConnection);
     connect(menu, &ActionMenu::textChanged, this, &KirigamiActionCollection::menusChanged, Qt::UniqueConnection);
     connect(menu, &ActionMenu::iconNameChanged, this, &KirigamiActionCollection::menusChanged, Qt::UniqueConnection);
+    connect(menu, &ActionMenu::menuBarVisibleChanged, this, &KirigamiActionCollection::menusChanged, Qt::UniqueConnection);
     Q_EMIT menusChanged();
 }
 

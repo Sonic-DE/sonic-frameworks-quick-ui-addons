@@ -221,6 +221,28 @@ Item {
         application: application
     }
 
+    KirigamiActions.Application {
+        id: visibilityApplication
+    }
+
+    ActionCollection {
+        id: visibilityCollection
+        name: "menu_bar_visibility"
+
+        menus: [
+            ActionMenu {
+                id: visibilityMenu
+                name: "visibility_probe"
+                text: "Visibility probe"
+            }
+        ]
+    }
+
+    ActionMenuBar {
+        id: visibilityMenuBar
+        collection: visibilityCollection
+    }
+
     TestCase {
         name: "ActionContextTest"
 
@@ -399,6 +421,36 @@ Item {
             compare(fileMenuBar.resolvedCollections().length, 2);
             tryCompare(fileMenuBar, "count", 3);
             compare(fileMenuBar.menuAt(0).title, "File");
+        }
+
+        function test_menuBarVisibilityUpdates_data() {
+            return [
+                {tag: "collection-only", useApplication: false},
+                {tag: "application", useApplication: true},
+            ];
+        }
+
+        function test_menuBarVisibilityUpdates(data) {
+            visibilityMenu.menuBarVisible = true;
+            visibilityMenuBar.application = data.useApplication ? visibilityApplication : null;
+            visibilityMenuBar.collection = data.useApplication ? null : visibilityCollection;
+            visibilityCollection.application = data.useApplication ? visibilityApplication : null;
+            visibilityMenuBar.rebuild();
+            wait(20);
+            const visibleCount = visibilityMenuBar.count;
+            verify(visibleCount > 0);
+
+            for (let i = 0; i < 2; ++i) {
+                visibilityMenu.menuBarVisible = false;
+                tryCompare(visibilityMenuBar, "count", visibleCount - 1);
+                visibilityMenu.menuBarVisible = true;
+                tryCompare(visibilityMenuBar, "count", visibleCount);
+            }
+
+            visibilityMenuBar.application = null;
+            visibilityMenuBar.collection = visibilityCollection;
+            visibilityCollection.application = null;
+            visibilityMenuBar.rebuild();
         }
 
         function test_dynamicCollectionAndActionUpdates() {
