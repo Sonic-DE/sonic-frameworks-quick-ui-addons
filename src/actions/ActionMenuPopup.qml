@@ -48,9 +48,13 @@ Item {
             return actionComponent.createObject(root, { separator: true });
         }
         const resolvedAction = itemData.action;
-        return resolvedAction ? actionComponent.createObject(root, {
+        if (!resolvedAction) {
+            return null;
+        }
+        const action = actionComponent.createObject(root, {
             fromQAction: resolvedAction,
-        }) : null;
+        });
+        return action;
     }
 
     function createSubmenu(actionMenu) {
