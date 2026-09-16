@@ -49,6 +49,7 @@ endmacro()
 kirigami_add_tests(
     tst_avatar.qml
     tst_radioselector.qml
+    tst_formdelegatecontent.qml
     tst_onboarding.qml
     tst_sounds.qml
     tst_actioncontext.qml
