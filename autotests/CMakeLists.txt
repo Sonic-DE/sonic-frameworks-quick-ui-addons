@@ -8,6 +8,15 @@ if(NOT Qt6QuickTest_FOUND)
     return()
 endif()
 
+add_executable(kirigamiappdefaultstest kirigamiappdefaultstest.cpp)
+target_include_directories(kirigamiappdefaultstest PRIVATE ${PROJECT_SOURCE_DIR}/src/app)
+target_link_libraries(kirigamiappdefaultstest PRIVATE
+    KirigamiApp
+    Qt6::Qml
+    Qt6::Test
+)
+add_test(NAME kirigamiappdefaultstest COMMAND kirigamiappdefaultstest)
+
 add_library(test-artefacts STATIC
     example_albummodel.cpp
 )
