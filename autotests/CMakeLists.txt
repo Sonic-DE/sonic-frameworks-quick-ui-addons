@@ -64,6 +64,7 @@ kirigami_add_tests(
     tst_sounds.qml
     tst_actioncontext.qml
     tst_actionmenuvisibility.qml
+    tst_formcard.qml
     tst_pdfeditoractions.qml
     tst_album_qmllistmodel.qml
     tst_album_abstractlistmodel.qml
