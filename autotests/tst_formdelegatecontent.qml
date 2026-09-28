@@ -19,6 +19,7 @@ TestCase {
     Component { id: radioComponent; FormCard.FormRadioDelegate { width: 500; height: 100; text: "Radio" } }
     Component { id: switchComponent; FormCard.FormSwitchDelegate { width: 500; height: 100; text: "Switch" } }
     Component { id: textComponent; FormCard.FormTextDelegate { width: 500; height: 100; text: "Text" } }
+    Component { id: sliderComponent; FormCard.FormSliderDelegate { width: 500; height: 100; label: "Slider" } }
 
     Component {
         id: extraComponent
@@ -43,6 +44,7 @@ TestCase {
             {name: "radio", component: radioComponent},
             {name: "switch", component: switchComponent},
             {name: "text", component: textComponent},
+            {name: "slider", component: sliderComponent},
         ];
         const result = [];
         for (const delegate of delegates) {
