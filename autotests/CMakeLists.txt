@@ -67,6 +67,7 @@ kirigami_add_tests(
     tst_actioncontext.qml
     tst_actionmenuvisibility.qml
     tst_formcard.qml
+    tst_formcarddialog.qml
     tst_formtextfields.qml
     tst_formdelegatebindings.qml
     tst_messagedialog.qml
