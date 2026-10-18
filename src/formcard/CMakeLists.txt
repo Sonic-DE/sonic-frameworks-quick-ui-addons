@@ -87,7 +87,12 @@ qt_target_qml_sources(formcardplugin RESOURCES
     styles/Material/FormDelegateBackground.qml
     styles/Material/FormGridContainer.qml
     styles/Material/FormHeader.qml
+    OUTPUT_TARGETS _formcard_style_targets
 )
+
+if(_formcard_style_targets)
+    install(TARGETS ${_formcard_style_targets} EXPORT KirigamiAddonsTargets ${KF_INSTALL_TARGETS_DEFAULT_ARGS})
+endif()
 target_compile_definitions(formcardplugin PRIVATE -DTRANSLATION_DOMAIN=\"kirigami-addons6\")
 
 qt_add_resources(formcardplugin "formcard-images" PREFIX "/kirigamiaddons/formcard" FILES sonicde.svg)
