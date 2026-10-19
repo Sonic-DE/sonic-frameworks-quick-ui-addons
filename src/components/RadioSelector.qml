@@ -42,7 +42,7 @@ Templates.RadioSelector {
 
     spacing: Kirigami.Units.smallSpacing
 
-    delegate: Templates.RadioSelectorButton {
+    _delegate: Templates.RadioSelectorButton {
         id: button
         selector: root
 
@@ -115,12 +115,12 @@ Templates.RadioSelector {
     Kirigami.ShadowedRectangle {
         id: marker
 
-        x: root.leftPadding + (root.checkedButton?.x ?? 0)
+        x: root.leftPadding + (root._checkedButton?.x ?? 0)
         y: root.topPadding
         z: -1
 
         height: root.availableHeight
-        width: root.checkedButton?.width ?? 0
+        width: root._checkedButton?.width ?? 0
         radius: Kirigami.Units.cornerRadius
 
         color: Kirigami.ColorUtils.linearInterpolation(Kirigami.Theme.hoverColor, Kirigami.Theme.backgroundColor, 0.8)
