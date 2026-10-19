@@ -3,7 +3,7 @@
 
 import QtQuick
 import QtQuick.Controls as QQC2
-import QtQuick.Layouts
+import QtQuick.Templates as T
 import QtTest
 import org.kde.kirigamiaddons.components as Components
 
@@ -33,8 +33,7 @@ TestCase {
     }
 
     function buttons(selector) {
-        const layout = selector.children.find(child => child instanceof RowLayout);
-        return layout.children.filter(child => child instanceof QQC2.ToolButton);
+        return selector.contentItem.children.filter(child => child instanceof T.AbstractButton);
     }
 
     function createSelector(properties) {
