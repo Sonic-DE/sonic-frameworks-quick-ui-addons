@@ -93,6 +93,7 @@ ecm_add_qml_module(KirigamiAddonsStatefulApp
     VERSION 1.0
     GENERATE_PLUGIN_SOURCE
     DEPENDENCIES
+        org.kde.kirigamiaddons.private
         org.kde.kirigami
         org.kde.kirigamiaddons.components
         QtQuick
@@ -117,6 +118,7 @@ ecm_add_qml_module(KirigamiAddonsActionsQml
     VERSION 1.0
     GENERATE_PLUGIN_SOURCE
     DEPENDENCIES
+        org.kde.kirigamiaddons.private
         org.kde.kirigami
         org.kde.kirigamiaddons.components
         QtQuick

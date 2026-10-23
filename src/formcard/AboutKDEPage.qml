@@ -5,6 +5,7 @@ import QtQuick
 import QtQuick.Controls as QQC2
 import QtQuick.Window
 import QtQuick.Layouts
+import org.kde.kirigamiaddons.private
 import org.kde.kirigami as Kirigami
 import org.kde.coreaddons as Core
 
@@ -21,7 +22,7 @@ import org.kde.coreaddons as Core
 FormCardPage {
     id: page
 
-    title: i18nd("kirigami-addons6", "About SonicDE")
+    title: I18n.i18n("About SonicDE")
 
     readonly property string _bugReportUrl: {
         const bugAddress = Core.AboutData.bugAddress ?? "";
@@ -61,7 +62,7 @@ FormCardPage {
 
                     Kirigami.Heading {
                         Layout.fillWidth: true
-                        text: i18nd("kirigami-addons6", "SonicDE")
+                        text: I18n.i18n("SonicDE")
                         wrapMode: Text.WordWrap
                     }
 
@@ -70,27 +71,27 @@ FormCardPage {
                         level: 3
                         type: Kirigami.Heading.Type.Secondary
                         wrapMode: Text.WordWrap
-                        text: i18nd("kirigami-addons6", "Be Free!")
+                        text: I18n.i18n("Be Free!")
                     }
                 }
             }
         }
 
         FormTextDelegate {
-            text: i18nd("kirigami-addons6", "SonicDE is a world-wide community of software engineers, artists, writers, translators and creators who are committed to Free Software development. SonicDE produces the Sonic Desktop Environment, its applications, and the many software libraries that support them.\n\n\
+            text: I18n.i18n("SonicDE is a world-wide community of software engineers, artists, writers, translators and creators who are committed to Free Software development. SonicDE produces the Sonic Desktop Environment, its applications, and the many software libraries that support them.\n\n\
 SonicDE is a cooperative enterprise: no single entity controls its direction or products. Instead, we work together to achieve the common goal of building the world's finest Free Software. Everyone is welcome to join and contribute to SonicDE, including you.")
             textItem.wrapMode: Text.WordWrap
         }
 
         FormLinkDelegate {
             icon.name: "globe-symbolic"
-            text: i18nd("kirigami-addons6", "Homepage")
+            text: I18n.i18n("Homepage")
             url: "https://sonicde.org"
         }
     }
 
     FormHeader {
-        title: i18nd("kirigami-addons6", "Report bugs")
+        title: I18n.i18n("Report bugs")
         visible: page._bugReportUrl.length > 0
     }
 
@@ -99,7 +100,7 @@ SonicDE is a cooperative enterprise: no single entity controls its direction or 
         visible: page._bugReportUrl.length > 0
         autoSeparators: true
         FormTextDelegate {
-            text: i18nd("kirigami-addons6", "Software can always be improved, and the SonicDE team is ready to do so. However, you - the user - must tell us when something does not work as expected or could be done better.\n\n\
+            text: I18n.i18n("Software can always be improved, and the SonicDE team is ready to do so. However, you - the user - must tell us when something does not work as expected or could be done better.\n\n\
 SonicDE tracks bugs in the issue tracker of each project. Use the button below to file a bug, or use the program's About page to report a bug specific to this application.\n\n\
 If you have a suggestion for improvement then you are welcome to open an issue for your wish as well.")
             textItem.wrapMode: Text.WordWrap
@@ -108,49 +109,49 @@ If you have a suggestion for improvement then you are welcome to open an issue f
         FormLinkDelegate {
             url: page._bugReportUrl
             icon.name: "tools-report-bug-symbolic"
-            text: i18nd("kirigami-addons6", "Report a bug")
+            text: I18n.i18n("Report a bug")
         }
     }
 
     FormHeader {
-        title: i18nd("kirigami-addons6", "Join us")
+        title: I18n.i18n("Join us")
     }
 
     FormCard {
         autoSeparators: true
         FormTextDelegate {
-            text: i18nd("kirigami-addons6", "You do not have to be a software developer to be a member of the SonicDE team. You can help translate program interfaces. You can provide graphics, themes, sounds, and improved documentation. You decide!")
+            text: I18n.i18n("You do not have to be a software developer to be a member of the SonicDE team. You can help translate program interfaces. You can provide graphics, themes, sounds, and improved documentation. You decide!")
             textItem.wrapMode: Text.WordWrap
         }
 
         FormLinkDelegate {
-            text: i18nd("kirigami-addons6", "Get Involved")
+            text: I18n.i18n("Get Involved")
             icon.name: "system-user-list"
             url: "https://github.com/Sonic-DE"
         }
 
         FormLinkDelegate {
             icon.name: 'applications-development-symbolic'
-            text: i18nd("kirigami-addons6", "Developer Documentation")
+            text: I18n.i18n("Developer Documentation")
             url: "https://sonicde.org"
         }
     }
 
     FormHeader {
-        title: i18nd("kirigami-addons6", "Support us")
+        title: I18n.i18n("Support us")
     }
 
     FormCard {
         autoSeparators: true
         FormTextDelegate {
-            text: i18nd("kirigami-addons6", "SonicDE software is and will always be available free of charge, however creating it is not free.\n\n\
+            text: I18n.i18n("SonicDE software is and will always be available free of charge, however creating it is not free.\n\n\
 No way to donate to SonicDE has been set up yet, but we will be creating one. Until then, you can support SonicDE by contributing.\n\n\
 Thank you very much in advance for your support.")
             textItem.wrapMode: Text.WordWrap
         }
 
         FormLinkDelegate {
-            text: i18nd("kirigami-addons6", "SonicDE")
+            text: I18n.i18n("SonicDE")
             icon.name: 'globe-symbolic'
             url: "https://sonicde.org"
         }
