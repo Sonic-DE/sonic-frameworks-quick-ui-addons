@@ -93,7 +93,7 @@ Templates.RadioSelector {
 
             Item {
                 Layout.fillWidth: true
-                Layout.rightMargin: Platform.Units.largeSpacing
+                Layout.rightMargin: icon.visible ? Platform.Units.smallSpacing : Platform.Units.largeSpacing
             }
         }
     }
