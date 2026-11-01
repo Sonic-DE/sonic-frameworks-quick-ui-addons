@@ -189,7 +189,7 @@ void AbstractKirigamiApplication::setupActions()
     actionName = QLatin1StringView("open_about_kde_page");
     if (KAuthorized::authorizeAction(actionName)) {
         auto action = d->collection->addAction(actionName, this, &AbstractKirigamiApplication::openAboutKDEPage);
-        action->setText(i18n("About KDE"));
+        action->setText(i18n("About SonicDE"));
         action->setIcon(QIcon::fromTheme(QStringLiteral("kde")));
 
         if (!KAboutData::applicationData().desktopFileName().startsWith(u"org.kde."_s)) {

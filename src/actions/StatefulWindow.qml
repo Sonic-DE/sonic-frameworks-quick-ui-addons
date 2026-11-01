@@ -119,7 +119,7 @@ Kirigami.ApplicationWindow {
             }, {
                 width: Kirigami.Units.gridUnit * 30,
                 height: Kirigami.Units.gridUnit * 30,
-                title: i18ndc("kirigami-addons6", "@title:window", "About KDE"),
+                title: i18ndc("kirigami-addons6", "@title:window", "About SonicDE"),
             });
             openDialogWindow.Keys.escapePressed.connect(function() {
                 openDialogWindow.Kirigami.PageStack.closeDialog();

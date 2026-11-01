@@ -21,7 +21,7 @@ import org.kde.coreaddons as Core
 FormCardPage {
     id: page
 
-    title: i18nd("kirigami-addons6", "About KDE")
+    title: i18nd("kirigami-addons6", "About SonicDE")
 
     readonly property string _bugReportUrl: {
         const bugAddress = Core.AboutData.bugAddress ?? "";
@@ -32,12 +32,7 @@ FormCardPage {
             }
             return bugAddress;
         }
-        const elements = Core.AboutData.productName.split('/');
-        let url = `https://bugs.kde.org/enter_bug.cgi?format=guided&product=${elements[0]}&version=${Core.AboutData.version}`;
-        if (elements.length === 2) {
-            url += "&component=" + elements[1];
-        }
-        return url;
+        return "https://github.com/Sonic-DE";
     }
 
     FormCard {
@@ -65,7 +60,7 @@ FormCardPage {
 
                     Kirigami.Heading {
                         Layout.fillWidth: true
-                        text: i18nd("kirigami-addons6", "KDE")
+                        text: i18nd("kirigami-addons6", "SonicDE")
                         wrapMode: Text.WordWrap
                     }
 
@@ -81,15 +76,15 @@ FormCardPage {
         }
 
         FormTextDelegate {
-            text: i18nd("kirigami-addons6", "KDE is a world-wide community of software engineers, artists, writers, translators and creators who are committed to Free Software development. KDE produces the Plasma desktop environment, hundreds of applications, and the many software libraries that support them.\n\n\
-KDE is a cooperative enterprise: no single entity controls its direction or products. Instead, we work together to achieve the common goal of building the world's finest Free Software. Everyone is welcome to join and contribute to KDE, including you.")
+            text: i18nd("kirigami-addons6", "SonicDE is a world-wide community of software engineers, artists, writers, translators and creators who are committed to Free Software development. SonicDE produces the Sonic Desktop Environment, its applications, and the many software libraries that support them.\n\n\
+SonicDE is a cooperative enterprise: no single entity controls its direction or products. Instead, we work together to achieve the common goal of building the world's finest Free Software. Everyone is welcome to join and contribute to SonicDE, including you.")
             textItem.wrapMode: Text.WordWrap
         }
 
         FormLinkDelegate {
             icon.name: "globe-symbolic"
             text: i18nd("kirigami-addons6", "Homepage")
-            url: "https://kde.org/"
+            url: "https://sonicde.org"
         }
     }
 
@@ -103,9 +98,9 @@ KDE is a cooperative enterprise: no single entity controls its direction or prod
         visible: page._bugReportUrl.length > 0
         autoSeparators: true
         FormTextDelegate {
-            text: i18nd("kirigami-addons6", "Software can always be improved, and the KDE team is ready to do so. However, you - the user - must tell us when something does not work as expected or could be done better.\n\n\
-KDE has a bug tracking system. Use the button below to file a bug, or use the program's About page to report a bug specific to this application.\n\n\
-If you have a suggestion for improvement then you are welcome to use the bug tracking system to register your wish. Make sure you use the severity called \"Wishlist\".")
+            text: i18nd("kirigami-addons6", "Software can always be improved, and the SonicDE team is ready to do so. However, you - the user - must tell us when something does not work as expected or could be done better.\n\n\
+SonicDE tracks bugs in the issue tracker of each project. Use the button below to file a bug, or use the program's About page to report a bug specific to this application.\n\n\
+If you have a suggestion for improvement then you are welcome to open an issue for your wish as well.")
             textItem.wrapMode: Text.WordWrap
         }
 
@@ -123,20 +118,20 @@ If you have a suggestion for improvement then you are welcome to use the bug tra
     FormCard {
         autoSeparators: true
         FormTextDelegate {
-            text: i18nd("kirigami-addons6", "You do not have to be a software developer to be a member of the KDE team. You can join the language teams that translate program interfaces. You can provide graphics, themes, sounds, and improved documentation. You decide!")
+            text: i18nd("kirigami-addons6", "You do not have to be a software developer to be a member of the SonicDE team. You can help translate program interfaces. You can provide graphics, themes, sounds, and improved documentation. You decide!")
             textItem.wrapMode: Text.WordWrap
         }
 
         FormLinkDelegate {
             text: i18nd("kirigami-addons6", "Get Involved")
             icon.name: "system-user-list"
-            url: "https://community.kde.org/Get_Involved"
+            url: "https://github.com/Sonic-DE"
         }
 
         FormLinkDelegate {
             icon.name: 'applications-development-symbolic'
             text: i18nd("kirigami-addons6", "Developer Documentation")
-            url: "https://develop.kde.org/"
+            url: "https://sonicde.org"
         }
     }
 
@@ -147,25 +142,16 @@ If you have a suggestion for improvement then you are welcome to use the bug tra
     FormCard {
         autoSeparators: true
         FormTextDelegate {
-            text: i18nd("kirigami-addons6", "KDE software is and will always be available free of charge, however creating it is not free.\n\n\
-To support development the KDE community has formed the KDE e.V., a non-profit organization legally founded in Germany. KDE e.V. represents the KDE community in legal and financial matters.\n\n\
-KDE benefits from many kinds of contributions, including financial. We use the funds to reimburse members and others for expenses they incur when contributing. Further funds are used for legal support and organizing conferences and meetings.\n\n\
-We would like to encourage you to support our efforts with a financial donation.\n\n\
+            text: i18nd("kirigami-addons6", "SonicDE software is and will always be available free of charge, however creating it is not free.\n\n\
+No way to donate to SonicDE has been set up yet, but we will be creating one. Until then, you can support SonicDE by contributing.\n\n\
 Thank you very much in advance for your support.")
             textItem.wrapMode: Text.WordWrap
         }
 
         FormLinkDelegate {
-            text: i18nd("kirigami-addons6", "KDE e.V.")
-            icon.name: 'kde-symbolic'
-            url: "https://ev.kde.org/"
-        }
-
-        FormLinkDelegate {
-            text: i18nd("kirigami-addons6", "Donate")
-            icon.name: 'donate-symbolic'
-            // Lets KDE know which application the donation came from, like AboutPage does.
-            url: Core.AboutData.componentName.length > 0 ? "https://www.kde.org/donate?app=" + encodeURIComponent(Core.AboutData.componentName) : "https://www.kde.org/donate"
+            text: i18nd("kirigami-addons6", "SonicDE")
+            icon.name: 'globe-symbolic'
+            url: "https://sonicde.org"
         }
     }
 }
