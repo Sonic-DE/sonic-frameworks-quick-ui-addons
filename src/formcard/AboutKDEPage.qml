@@ -51,7 +51,8 @@ FormCardPage {
                     Layout.preferredWidth: height
                     Layout.maximumWidth: page.width / 3;
                     Layout.rightMargin: Kirigami.Units.largeSpacing
-                    source: "kde"
+                    // Bundled, so icon themes without a SonicDE icon don't show another logo.
+                    source: "qrc:/kirigamiaddons/formcard/sonicde.svg"
                 }
 
                 ColumnLayout {

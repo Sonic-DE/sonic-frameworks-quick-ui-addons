@@ -26,6 +26,9 @@ add_library(KirigamiAddonsStatefulApp
     private/declarativeapplication.h
 )
 
+set_source_files_properties(../formcard/sonicde.svg PROPERTIES QT_RESOURCE_ALIAS sonicde.svg)
+qt_add_resources(KirigamiAddonsStatefulApp "actions-images" PREFIX "/kirigamiaddons/actions" FILES ../formcard/sonicde.svg)
+
 ecm_generate_qdoc(KirigamiAddonsStatefulApp kirigamiaddonsactions.qdocconf)
 
 set_target_properties(KirigamiAddonsStatefulApp PROPERTIES

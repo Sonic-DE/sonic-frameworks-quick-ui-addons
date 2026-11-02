@@ -190,7 +190,8 @@ void AbstractKirigamiApplication::setupActions()
     if (KAuthorized::authorizeAction(actionName)) {
         auto action = d->collection->addAction(actionName, this, &AbstractKirigamiApplication::openAboutKDEPage);
         action->setText(i18n("About SonicDE"));
-        action->setIcon(QIcon::fromTheme(QStringLiteral("kde")));
+        // Bundled, so icon themes without a SonicDE icon don't show another logo.
+        action->setIcon(QIcon(QStringLiteral(":/kirigamiaddons/actions/sonicde.svg")));
 
         if (!KAboutData::applicationData().desktopFileName().startsWith(u"org.kde."_s)) {
             action->setVisible(false);

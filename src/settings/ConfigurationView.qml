@@ -48,7 +48,8 @@ import org.kde.kirigamiaddons.settings.private as Private
                KirigamiSettings.ConfigurationModule {
                    moduleId: "aboutkde"
                    text: i18nc("@action:button", "About KDE")
-                   icon.name: "kde"
+                   // Bundled, so icon themes without a SonicDE icon don't show another logo.
+                   icon.source: "qrc:/kirigamiaddons/settings/sonicde.svg"
                    page: () => Qt.createComponent("org.kde.kirigamiaddons.formcard", "AboutKDE")
                    category: i18nc("@title:group", "About")
                }

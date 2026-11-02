@@ -38,3 +38,9 @@ path = ["**.qdoc", "**.qdocconf"]
 precedence = "aggregate"
 SPDX-FileCopyrightText = "2025 by Thiago Masato Costa Sueto <thiago.sueto@kde.org>"
 SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = "src/formcard/sonicde.svg"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 Joseph Crowell <joseph.w.crowell@gmail.com>"
+SPDX-License-Identifier = "LGPL-3.0-or-later"

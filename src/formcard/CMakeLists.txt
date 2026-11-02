@@ -75,6 +75,8 @@ target_sources(formcardplugin PRIVATE
 )
 target_compile_definitions(formcardplugin PRIVATE -DTRANSLATION_DOMAIN=\"kirigami-addons6\")
 
+qt_add_resources(formcardplugin "formcard-images" PREFIX "/kirigamiaddons/formcard" FILES sonicde.svg)
+
 set_source_files_properties(private/FormCardUnits.qml PROPERTIES QT_QML_SINGLETON_TYPE TRUE)
 
 ecm_target_qml_sources(formcardplugin PATH private SOURCES

@@ -120,7 +120,7 @@ FormCard.FormCardPage {
 
                         contentItem: RowLayout {
                             Kirigami.Icon {
-                                source: moduleDelegate.modelData.icon.name
+                                source: moduleDelegate.modelData.icon.name || moduleDelegate.modelData.icon.source
                                 Layout.rightMargin: Kirigami.Units.largeSpacing
                                 implicitWidth: Kirigami.Units.iconSizes.medium
                                 implicitHeight: Kirigami.Units.iconSizes.medium

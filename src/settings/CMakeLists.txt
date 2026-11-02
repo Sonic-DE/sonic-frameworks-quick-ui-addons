@@ -27,4 +27,7 @@ target_link_libraries(settingsplugin PRIVATE
     Qt6::Qml
 )
 
+set_source_files_properties(../formcard/sonicde.svg PROPERTIES QT_RESOURCE_ALIAS sonicde.svg)
+qt_add_resources(settingsplugin "settings-images" PREFIX "/kirigamiaddons/settings" FILES ../formcard/sonicde.svg)
+
 ecm_finalize_qml_module(settingsplugin DESTINATION ${KDE_INSTALL_QMLDIR} EXPORT KirigamiAddonsTargets)
