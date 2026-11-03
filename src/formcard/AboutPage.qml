@@ -2,8 +2,12 @@
 // SPDX-FileCopyrightText: 2021 Carl Schwan <carl@carlschwan.eu>
 // SPDX-License-Identifier: LGPL-2.0-or-later
 
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import QtQuick.Controls as QQC2
+import QtQuick.Controls.Basic as Basic
+import QtQuick.Templates as T
 import QtQuick.Window
 import QtQuick.Layouts
 import org.kde.kirigamiaddons.private
@@ -88,9 +92,9 @@ FormCardPage {
        starts with "org.sonicde." or "org.kde.", otherwise empty.
      */
     property url getInvolvedUrl: {
-        if (aboutData.hasOwnProperty("url") && aboutData.url(Core.AboutUrlType?.Contribute) !== "")
-            return aboutData.url(Core.AboutUrlType?.Contribute);
-        return /^org\.(sonicde|kde)\./.test(aboutData.desktopFileName) ? "https://github.com/Sonic-DE" : "";
+        if (page.aboutData.hasOwnProperty("url") && page.aboutData.url(Core.AboutUrlType.Contribute) !== "")
+            return page.aboutData.url(Core.AboutUrlType.Contribute);
+        return /^org\.(sonicde|kde)\./.test(page.aboutData.desktopFileName) ? "https://github.com/Sonic-DE" : "";
     }
 
     /*!
@@ -100,8 +104,8 @@ FormCardPage {
        as SonicDE has no donation page yet.
      */
     property url donateUrl: {
-        if (page.aboutData.hasOwnProperty("url") && aboutData.url(Core.AboutUrlType?.Donation) !== "")
-            return aboutData.url(Core.AboutUrlType?.Donation);
+        if (page.aboutData.hasOwnProperty("url") && page.aboutData.url(Core.AboutUrlType.Donation) !== "")
+            return page.aboutData.url(Core.AboutUrlType.Donation);
         return "";
     }
 
@@ -133,17 +137,8 @@ FormCardPage {
         AbstractFormDelegate {
             id: generalDelegate
 
-            readonly property bool hasReleases: (page.aboutData.releases?.length ?? 0) > 0
-
-            Layout.fillWidth: true
-            focusPolicy: hasReleases ? Qt.StrongFocus : Qt.NoFocus
-            hoverEnabled: hasReleases && !Kirigami.Settings.hasTransientTouchInput
-            Accessible.role: hasReleases ? Accessible.Button : Accessible.StaticText
-            Accessible.name: hasReleases
-                ? I18n.i18nc("@action:button", "Show release history for %1 %2", page.aboutData.displayName, page.aboutData.version)
-                : page.aboutData.displayName + " " + page.aboutData.version
-            background.visible: hasReleases
-
+            Accessible.name: page.aboutData.displayName + " " + page.aboutData.version
+            background: null
             contentItem: RowLayout {
                 spacing: Kirigami.Units.smallSpacing * 2
 
@@ -159,22 +154,11 @@ FormCardPage {
                     Layout.fillWidth: true
                     spacing: Kirigami.Units.smallSpacing
 
-                    RowLayout {
-                        spacing: Kirigami.Units.smallSpacing
-
-                        Kirigami.Heading {
-                            Layout.fillWidth: true
-                            text: page.aboutData.displayName + " " + page.aboutData.version
-                            wrapMode: Text.WordWrap
-                        }
-
-                        Kirigami.Badge {
-                            visible: FormCardModule.AboutComponent.hasNewReleases
-                            text: I18n.i18n("What's new")
-                            type: Kirigami.Badge.Type.Positive
-                        }
+                    Kirigami.Heading {
+                        Layout.fillWidth: true
+                        text: page.aboutData.displayName + " " + page.aboutData.version
+                        wrapMode: Text.WordWrap
                     }
-
 
                     Kirigami.Heading {
                         Layout.fillWidth: true
@@ -185,58 +169,53 @@ FormCardPage {
                     }
                 }
             }
-
-            onClicked: {
-                if (generalDelegate.hasReleases) {
-                    releasesLoader.active = true;
-                }
-            }
         }
 
         FormTextDelegate {
             id: copyrightDelegate
-            visible: aboutData.copyrightStatement.length > 0
+            visible: page.aboutData.copyrightStatement.length > 0
             text: I18n.i18n("Copyright")
             descriptionItem.textFormat: Text.PlainText
-            description: aboutData.copyrightStatement
+            description: page.aboutData.copyrightStatement
         }
     }
 
     FormHeader {
-        visible: aboutData.otherText.length > 0
+        visible: page.aboutData.otherText.length > 0
         title: I18n.i18n("Description")
     }
 
     FormCard {
-        visible: aboutData.otherText.length > 0
+        visible: page.aboutData.otherText.length > 0
         FormTextDelegate {
-            Layout.fillWidth: true
             textItem.wrapMode: Text.WordWrap
-            text: aboutData.otherText
+            text: page.aboutData.otherText
         }
     }
 
     FormHeader {
-        title: I18n.i18np("License", "Licenses", aboutData.licenses.length)
-        visible: aboutData.licenses.length
+        title: I18n.i18np("License", "Licenses", page.aboutData.licenses.length)
+        visible: page.aboutData.licenses.length
     }
 
     FormCard {
-        visible: aboutData.licenses.length
+        visible: page.aboutData.licenses.length
 
         Repeater {
-            model: aboutData.licenses
+            model: page.aboutData.licenses
             delegate: FormButtonDelegate {
-                text: modelData.name
-                Layout.fillWidth: true
-                onClicked: licenseLoader.open(modelData.name, modelData.text)
+                id: licenseDelegate
+
+                required property var modelData
+
+                text: licenseDelegate.modelData.name
+                onClicked: licenseLoader.open(licenseDelegate.modelData.name, licenseDelegate.modelData.text)
             }
         }
     }
 
     FormGridContainer {
         Layout.topMargin: Kirigami.Units.gridUnit
-        Layout.fillWidth: true
 
         // Use URLs because delegate visibility also depends on this container's visibility.
         visible: getInvolvedDelegate.url.length > 0
@@ -251,8 +230,8 @@ FormCardPage {
             id: getInvolvedDelegate
             icon.name: "globe-symbolic"
             text: I18n.i18n("Homepage")
-            url: aboutData.homepage
-            visible: aboutData.homepage.length > 0
+            url: page.aboutData.homepage
+            visible: page.aboutData.homepage.length > 0
         }
 
         FormLinkDelegate {
@@ -268,7 +247,7 @@ FormCardPage {
                 url.search = query + "app=" + encodeURIComponent(page.aboutData.componentName);
                 return url.toString();
             }
-            visible: donateUrl.toString().length > 0
+            visible: page.donateUrl.toString().length > 0
         }
 
         FormLinkDelegate {
@@ -276,13 +255,13 @@ FormCardPage {
             icon.name: "applications-development-symbolic"
             text: I18n.i18n("Get Involved")
             url: page.getInvolvedUrl
-            visible: page.getInvolvedUrl != ""
+            visible: page.getInvolvedUrl.toString() !== ""
         }
 
         FormLinkDelegate {
             id: bugDelegate
             url: {
-                const bugAddress = aboutData.bugAddress ?? "";
+                const bugAddress = page.aboutData.bugAddress ?? "";
                 if (bugAddress !== "submit@bugs.kde.org") {
                     // A plain email address can only be opened with a mailto: scheme.
                     if (bugAddress.includes("@") && !bugAddress.includes(":")) {
@@ -290,7 +269,7 @@ FormCardPage {
                     }
                     return bugAddress;
                 }
-                const elements = aboutData.productName.split('/');
+                const elements = page.aboutData.productName.split('/');
                 const url = new URL("https://bugs.kde.org/enter_bug.cgi");
                 const params = new URLSearchParams();
                 params.set("format", "guided");
@@ -313,7 +292,7 @@ FormCardPage {
             url: {
                 if (!page.aboutData.hasOwnProperty("url")) // since KF 6.29
                     return "";
-                const s = page.aboutData.url(Core.AboutUrlType?.XKDEMatrixRoom);
+                const s = page.aboutData.url(Core.AboutUrlType.XKDEMatrixRoom);
                 return s.startsWith("http") ? s : s != "" ? "https://matrix.to/#/" + s : "";
             }
             icon.name: "im-matrix"
@@ -326,7 +305,7 @@ FormCardPage {
             url: {
                 if (!page.aboutData.hasOwnProperty("url")) // since KF 6.29
                     return "";
-                const s = page.aboutData.url(Core.AboutUrlType?.XKDEMastodon);
+                const s = page.aboutData.url(Core.AboutUrlType.XKDEMastodon);
                 if (s == "" || s.startsWith("http"))
                     return s;
                 const m = s.match(/^(@\S*)@(\S+)$/);
@@ -342,7 +321,7 @@ FormCardPage {
             url: {
                 if (!page.aboutData.hasOwnProperty("url")) // since KF 6.29
                     return "";
-                page.aboutData.url(Core.AboutUrlType?.VCSBrowser)
+                page.aboutData.url(Core.AboutUrlType.VCSBrowser)
             }
             icon.name: "code-context-symbolic"
             text: I18n.i18n("Source Code")
@@ -351,15 +330,83 @@ FormCardPage {
     }
 
     FormHeader {
+        id: headerRelease
+
+        readonly property bool hasReleases: (page.aboutData.releases?.length ?? 0) > 0
+
+        title: I18n.i18nc("@title:group", "Releases")
+        visible: hasReleases
+    }
+
+    Loader {
+        active: headerRelease.hasReleases
+        Layout.fillWidth: true
+
+        sourceComponent: FormCard {
+            autoSeparators: true
+
+            AbstractFormDelegate {
+                background: null
+                contentItem: ColumnLayout {
+                    id: releaseDelegate
+
+                    readonly property var modelData: page.aboutData.releases[0]
+
+                    Layout.fillWidth: true
+                    Layout.preferredWidth: Kirigami.Units.gridUnit * 30
+                    spacing: Kirigami.Units.smallSpacing
+
+                    Basic.Label {
+                        Layout.fillWidth: true
+                        text: releaseDelegate.modelData.version
+                        font.bold: true
+                    }
+
+                    Basic.Label {
+                        Layout.fillWidth: true
+                        text: releaseDelegate.modelData.date.toLocaleDateString()
+                        wrapMode: Text.WordWrap
+                        color: Kirigami.Theme.disabledTextColor
+                        visible: text.length > 0
+                    }
+
+                    Basic.Label {
+                        Layout.fillWidth: true
+                        Layout.minimumWidth: 0
+                        text: '<style>ul { margin-left: -30px; }</style>' + releaseDelegate.modelData.description
+                        textFormat: Text.RichText
+                        wrapMode: Text.WordWrap
+                        onLinkActivated: (link) => Qt.openUrlExternally(link)
+                        visible: (releaseDelegate.modelData.description?.length ?? 0) > 0
+                    }
+
+                    Basic.Label {
+                        Layout.fillWidth: true
+                        text: '<a href="' + releaseDelegate.modelData.url + '">' + I18n.i18n("More information") + '</a>'
+                        wrapMode: Text.WordWrap
+                        visible: releaseDelegate.modelData.url.toString().length > 0
+                        onLinkActivated: (link) => Qt.openUrlExternally(link)
+                    }
+                }
+            }
+
+            FormButtonDelegate {
+                text: I18n.i18nc("@action:button", "Show previous releases")
+                onClicked: releasesLoader.active = true;
+            }
+        }
+    }
+
+    FormHeader {
         title: I18n.i18n("Libraries in use")
         visible: page.showLibraries
 
-        actions: QQC2.Action {
+        actions: T.Action {
             text: I18n.i18nc("@action:button", "Copy to Clipboard")
             icon.name: 'edit-copy-symbolic'
             onTriggered: {
                 FormCardModule.AboutComponent.copyToClipboard();
-                page.QQC2.ApplicationWindow.window.showPassiveNotification(I18n.i18nc("@info", "System information copied to clipboard."), 'short');
+                (page.T.ApplicationWindow.window as Kirigami.ApplicationWindow)?.showPassiveNotification(I18n.i18nc("@info", "System information copied to clipboard."), 'short');
             }
         }
     }
@@ -375,48 +422,48 @@ FormCardPage {
 
     FormHeader {
         title: I18n.i18n("Authors")
-        visible: aboutData.authors !== undefined && aboutData.authors.length > 0
+        visible: page.aboutData.authors !== undefined && page.aboutData.authors.length > 0
     }
 
     FormCard {
-        visible: aboutData.authors !== undefined && aboutData.authors.length > 0
+        visible: page.aboutData.authors !== undefined && page.aboutData.authors.length > 0
         autoSeparators: true
 
         Repeater {
             id: authorsRepeater
-            model: aboutData.authors
+            model: page.aboutData.authors
             delegate: personDelegate
         }
     }
 
     FormHeader {
         title: I18n.i18n("Credits")
-        visible: aboutData.credits !== undefined && aboutData.credits.length > 0
+        visible: page.aboutData.credits !== undefined && page.aboutData.credits.length > 0
     }
 
     FormCard {
-        visible: aboutData.credits !== undefined && aboutData.credits.length > 0
+        visible: page.aboutData.credits !== undefined && page.aboutData.credits.length > 0
         autoSeparators: true
 
         Repeater {
             id: repCredits
-            model: aboutData.credits
+            model: page.aboutData.credits
             delegate: personDelegate
         }
     }
 
     FormHeader {
         title: I18n.i18n("Translators")
-        visible: aboutData.translators !== undefined && aboutData.translators.length > 0
+        visible: page.aboutData.translators !== undefined && page.aboutData.translators.length > 0
     }
 
     FormCard {
-        visible: aboutData.translators !== undefined && aboutData.translators.length > 0
+        visible: page.aboutData.translators !== undefined && page.aboutData.translators.length > 0
         autoSeparators: true
 
         Repeater {
             id: repTranslators
-            model: aboutData.translators
+            model: page.aboutData.translators
             delegate: personDelegate
         }
     }
@@ -427,12 +474,11 @@ FormCardPage {
             active: false
             sourceComponent: Private.AboutReleaseDialog {
                 releases: page.aboutData.releases
-                onClosed: releasesLoader.active = false
+                onClosed: releasesLoader.active = FormCardModule.AboutComponent.hasNewReleases
             }
             onLoaded: {
                 if (status === Loader.Ready) {
-                    item.showOnlyNewReleases = FormCardModule.AboutComponent.hasNewReleases;
-                    item.open();
+                    (item as T.Popup).open();
                     FormCardModule.AboutComponent.updateLastSeenVersion();
                 }
             }
@@ -457,7 +503,7 @@ FormCardPage {
             }
             onLoaded: {
                 if (status === Loader.Ready) {
-                    item.open();
+                    (item as T.Popup).open();
                 }
             }
         },
@@ -465,44 +511,47 @@ FormCardPage {
             id: personDelegate
 
             AbstractFormDelegate {
-                Layout.fillWidth: true
+                id: person
+
+                required property var modelData
+
                 background: null
                 contentItem: RowLayout {
-                    spacing: Private.FormCardUnits.horizontalSpacing
+                    spacing: FormCardModule.FormCardUnits.horizontalSpacing
 
                     KirigamiComponents.Avatar {
                         id: avatarIcon
 
                         implicitWidth: Kirigami.Units.iconSizes.medium
                         implicitHeight: implicitWidth
-                        name: modelData.name
-                        source: if (!!modelData.avatarUrl && modelData.avatarUrl.toString().startsWith('https://')) {
-                            const url = new URL(modelData.avatarUrl);
+                        name: person.modelData.name
+                        source: if (!!person.modelData.avatarUrl && person.modelData.avatarUrl.toString().startsWith('https://')) {
+                            const url = new URL(person.modelData.avatarUrl);
                             const params = new URLSearchParams(url.search);
-                            params.append("s", width);
+                            params.append("s", avatarIcon.width);
                             url.search = params.toString();
                             return url;
                         } else {
                             return '';
                         }
 
-                        Layout.rightMargin: Private.FormCardUnits.horizontalSpacing
+                        Layout.rightMargin: FormCardModule.FormCardUnits.horizontalSpacing
                     }
 
                     ColumnLayout {
                         Layout.fillWidth: true
-                        spacing: Private.FormCardUnits.verticalSpacing
+                        spacing: FormCardModule.FormCardUnits.verticalSpacing
 
-                        QQC2.Label {
+                        Basic.Label {
                             Layout.fillWidth: true
-                            text: modelData.name
+                            text: person.modelData.name
                             elide: Text.ElideRight
                         }
 
-                        QQC2.Label {
+                        Basic.Label {
                             id: internalDescriptionItem
                             Layout.fillWidth: true
-                            text: modelData.task
+                            text: person.modelData.task
                             color: Kirigami.Theme.disabledTextColor
                             font: Kirigami.Theme.smallFont
                             elide: Text.ElideRight
@@ -511,36 +560,39 @@ FormCardPage {
                     }
 
                     QQC2.ToolButton {
-                        visible: typeof(modelData.ocsUsername) !== "undefined" && modelData.ocsUsername.length > 0
+                        id: storeButton
+                        visible: typeof(person.modelData.ocsUsername) !== "undefined" && person.modelData.ocsUsername.length > 0
                         icon.name: "get-hot-new-stuff-symbolic"
-                        text: I18n.i18n("Visit %1's KDE Store page", modelData.name)
-                        display: QQC2.ToolButton.IconOnly
-                        QQC2.ToolTip.delay: Kirigami.Units.toolTipDelay
-                        QQC2.ToolTip.visible: hovered
-                        QQC2.ToolTip.text: I18n.i18n("Visit %1's KDE Store page", modelData.name)
-                        onClicked: Qt.openUrlExternally("https://store.kde.org/u/%1".arg(modelData.ocsUsername))
+                        text: I18n.i18n("Visit %1's KDE Store page", person.modelData.name)
+                        display: T.AbstractButton.IconOnly
+                        T.ToolTip.delay: Kirigami.Units.toolTipDelay
+                        T.ToolTip.visible: storeButton.hovered
+                        T.ToolTip.text: I18n.i18n("Visit %1's KDE Store page", person.modelData.name)
+                        onClicked: Qt.openUrlExternally("https://store.kde.org/u/%1".arg(person.modelData.ocsUsername))
                     }
 
                     QQC2.ToolButton {
-                        visible: typeof(modelData.emailAddress) !== "undefined" && modelData.emailAddress.length > 0
+                        id: emailButton
+                        visible: typeof(person.modelData.emailAddress) !== "undefined" && person.modelData.emailAddress.length > 0
                         icon.name: "mail-sent-symbolic"
-                        text: I18n.i18n("Send an email to %1", modelData.emailAddress)
-                        display: QQC2.ToolButton.IconOnly
-                        QQC2.ToolTip.delay: Kirigami.Units.toolTipDelay
-                        QQC2.ToolTip.visible: hovered
-                        QQC2.ToolTip.text: I18n.i18n("Send an email to %1", modelData.emailAddress)
-                        onClicked: Qt.openUrlExternally("mailto:%1".arg(modelData.emailAddress))
+                        text: I18n.i18n("Send an email to %1", person.modelData.emailAddress)
+                        display: T.AbstractButton.IconOnly
+                        T.ToolTip.delay: Kirigami.Units.toolTipDelay
+                        T.ToolTip.visible: emailButton.hovered
+                        T.ToolTip.text: I18n.i18n("Send an email to %1", person.modelData.emailAddress)
+                        onClicked: Qt.openUrlExternally("mailto:%1".arg(person.modelData.emailAddress))
                     }
 
                     QQC2.ToolButton {
-                        visible: typeof(modelData.webAddress) !== "undefined" && modelData.webAddress.length > 0
+                        id: personWebButton
+                        visible: typeof(person.modelData.webAddress) !== "undefined" && person.modelData.webAddress.length > 0
                         icon.name: "globe-symbolic"
-                        text: I18n.i18nc("@action:button", "Visit %1's website", modelData.name)
-                        display: QQC2.ToolButton.IconOnly
-                        QQC2.ToolTip.delay: Kirigami.Units.toolTipDelay
-                        QQC2.ToolTip.visible: hovered
-                        QQC2.ToolTip.text: (typeof(modelData.webAddress) === "undefined" && modelData.webAddress.length > 0) ? "" : modelData.webAddress
-                        onClicked: Qt.openUrlExternally(modelData.webAddress)
+                        text: I18n.i18nc("@action:button", "Visit %1's website", person.modelData.name)
+                        display: T.AbstractButton.IconOnly
+                        T.ToolTip.delay: Kirigami.Units.toolTipDelay
+                        T.ToolTip.visible: personWebButton.hovered
+                        T.ToolTip.text: (typeof(person.modelData.webAddress) === "undefined" && person.modelData.webAddress.length > 0) ? "" : person.modelData.webAddress
+                        onClicked: Qt.openUrlExternally(person.modelData.webAddress)
                     }
                 }
             }
@@ -556,19 +608,19 @@ FormCardPage {
                 Layout.fillWidth: true
                 background: null
                 contentItem: RowLayout {
-                    spacing: Private.FormCardUnits.horizontalSpacing
+                    spacing: FormCardModule.FormCardUnits.horizontalSpacing
 
                     ColumnLayout {
                         Layout.fillWidth: true
-                        spacing: Private.FormCardUnits.verticalSpacing
+                        spacing: FormCardModule.FormCardUnits.verticalSpacing
 
-                        QQC2.Label {
+                        Basic.Label {
                             Layout.fillWidth: true
                             text: delegate.modelData.name + ' ' + delegate.modelData.version
                             wrapMode: Text.WordWrap
                         }
 
-                        QQC2.Label {
+                        Basic.Label {
                             id: internalDescriptionItem
                             Layout.fillWidth: true
                             text: delegate.modelData.description
@@ -581,27 +633,28 @@ FormCardPage {
 
                     QQC2.ToolButton {
                         id: licenseButton
-                        visible: modelData.licenses.key !== 0
+                        visible: delegate.modelData.licenses.key !== 0
                         icon.name: "license-symbolic"
                         text: I18n.i18nc("@action:button", "Show license for %1", delegate.modelData.name)
-                        display: QQC2.ToolButton.IconOnly
+                        display: T.AbstractButton.IconOnly
 
-                        QQC2.ToolTip.delay: Kirigami.Units.toolTipDelay
-                        QQC2.ToolTip.visible: hovered
-                        QQC2.ToolTip.text: !visible ? "" : delegate.modelData.licenses.name
+                        T.ToolTip.delay: Kirigami.Units.toolTipDelay
+                        T.ToolTip.visible: licenseButton.hovered
+                        T.ToolTip.text: !licenseButton.visible ? "" : delegate.modelData.licenses.name
 
                         onClicked: licenseLoader.open(delegate.modelData.name, delegate.modelData.licenses.text)
                     }
 
                     QQC2.ToolButton {
-                        visible: typeof(modelData.webAddress) !== "undefined" && modelData.webAddress.length > 0
+                        id: libraryWebButton
+                        visible: typeof(delegate.modelData.webAddress) !== "undefined" && delegate.modelData.webAddress.length > 0
                         icon.name: "globe-symbolic"
                         text: I18n.i18nc("@action:button", "Visit %1's website", delegate.modelData.name)
-                        display: QQC2.ToolButton.IconOnly
-                        QQC2.ToolTip.delay: Kirigami.Units.toolTipDelay
-                        QQC2.ToolTip.visible: hovered
-                        QQC2.ToolTip.text: (typeof(modelData.webAddress) === "undefined" && modelData.webAddress.length > 0) ? "" : modelData.webAddress
-                        onClicked: Qt.openUrlExternally(modelData.webAddress)
+                        display: T.AbstractButton.IconOnly
+                        T.ToolTip.delay: Kirigami.Units.toolTipDelay
+                        T.ToolTip.visible: libraryWebButton.hovered
+                        T.ToolTip.text: (typeof(delegate.modelData.webAddress) === "undefined" && delegate.modelData.webAddress.length > 0) ? "" : delegate.modelData.webAddress
+                        onClicked: Qt.openUrlExternally(delegate.modelData.webAddress)
                     }
                 }
             }
