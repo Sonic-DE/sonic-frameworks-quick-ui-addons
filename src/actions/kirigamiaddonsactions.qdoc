@@ -162,3 +162,14 @@
    \sa ActionMenuPopup
    \sa StandardActionData
 */
+
+/*!
+   \module KirigamiAddonsActions
+   \title Kirigami Addons Actions C++ Classes
+   \ingroup modules
+   \cmakepackage KF6
+   \cmakecomponent KirigamiAddons
+   \cmaketargetitem KirigamiAddonsStatefulApp
+
+   \brief C++ classes behind the Kirigami Addons Actions QML types.
+*/
