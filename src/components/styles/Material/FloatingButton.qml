@@ -9,6 +9,7 @@ import QtQuick
 import QtQuick.Controls.Material
 import QtQuick.Controls.Material.impl
 import QtQuick.Controls.impl
+import QtQuick.Templates as T
 import org.kde.kirigami as Kirigami
 import org.kde.kirigamiaddons.components.templates as Templates
 
@@ -65,4 +66,8 @@ Templates.FloatingButton {
                                  Qt.alpha(Material.accent, Material.theme === Material.Dark ? 0.4 : 0.2))
     Material.foreground: Qt.tint(Material.theme === Material.Dark ? "white" : "black", Qt.alpha(Material.accent, 0.2))
     Material.elevation: !enabled ? 0 : !down && (hovered || visualFocus) ? 8 : 6
+
+    T.ToolTip.text: root.action instanceof Kirigami.Action ? (root.action as Kirigami.Action).tooltip : ""
+    T.ToolTip.visible: root.hovered && T.ToolTip.text.length > 0
+    T.ToolTip.delay: Kirigami.Units.toolTipDelay
 }

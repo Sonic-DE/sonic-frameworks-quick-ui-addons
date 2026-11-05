@@ -6,7 +6,7 @@
 
 import QtQuick
 import QtQuick.Layouts
-import QtQuick.Controls as QQC2
+import QtQuick.Templates as T
 import org.kde.kirigami as Kirigami
 import org.kde.kirigamiaddons.components.templates as Templates
 
@@ -123,4 +123,8 @@ Templates.FloatingButton {
             }
         }
     }
+
+    T.ToolTip.text: controlRoot.action instanceof Kirigami.Action ? (controlRoot.action as Kirigami.Action).tooltip : ""
+    T.ToolTip.visible: controlRoot.hovered && T.ToolTip.text.length > 0
+    T.ToolTip.delay: Kirigami.Units.toolTipDelay
 }
