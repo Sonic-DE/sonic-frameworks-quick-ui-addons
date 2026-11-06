@@ -58,6 +58,7 @@ macro(kirigami_add_tests)
 endmacro()
 
 kirigami_add_tests(
+    tst_timepicker.qml
     tst_avatar.qml
     tst_radioselector.qml
     tst_formdelegatecontent.qml
