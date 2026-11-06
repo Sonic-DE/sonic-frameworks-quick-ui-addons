@@ -10,8 +10,8 @@ Kirigami.ApplicationWindow {
     height: 700
 
     Component {
-        id: aboutkde
-        FormCard.AboutKDE {}
+        id: aboutsonicde
+        FormCard.AboutKDEPage {}
     }
 
     Component {
@@ -30,9 +30,9 @@ Kirigami.ApplicationWindow {
                 autoSeparators: true
 
                 FormCard.FormButtonDelegate {
-                    icon.name: "kde"
-                    text: i18nc("@action:button", "About KDE Page")
-                    onClicked: root.pageStack.layers.push(aboutkde)
+                    icon.name: "start-here-sonicde"
+                    text: i18nc("@action:button", "About SonicDE Page")
+                    onClicked: root.pageStack.layers.push(aboutsonicde)
                 }
 
                 FormCard.FormButtonDelegate {

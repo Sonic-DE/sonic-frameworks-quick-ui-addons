@@ -14,7 +14,7 @@ FormCard.FormCardPage {
     FormCard.FormCard {
         FormCard.FormTextDelegate {
             text: i18nc("@info", "Current Color Scheme")
-            description: "Breeze"
+            description: "Silver Light"
         }
 
         FormCard.FormComboBoxDelegate {

@@ -4,7 +4,7 @@
 #include <QIcon>
 #include <QQuickStyle>
 #include <KAboutData>
-#include <KLocalizedContext>
+#include <KLocalizedQmlContext>
 #include <KLocalizedString>
 
 int main(int argCount, char* argVector[])
@@ -20,7 +20,8 @@ int main(int argCount, char* argVector[])
         KAboutLicense::GPL_V3,
         QStringLiteral("(C) 2023"),
         i18nc("@info", "Optional text shown in the About"),
-        QStringLiteral("https://kde.org"));
+        QStringLiteral("https://sonicde.org"),
+        QStringLiteral("https://github.com/Sonic-DE"));
 
     aboutData.addAuthor(i18nc("@info:credit", "John Doe"),
                         i18nc("@info:credit", "Maintainer"));
@@ -30,10 +31,10 @@ int main(int argCount, char* argVector[])
     if (qEnvironmentVariableIsEmpty("QT_QUICK_CONTROLS_STYLE")) {
         QQuickStyle::setStyle(QStringLiteral("org.kde.desktop"));
     }
-    QApplication::setWindowIcon(QIcon::fromTheme(QStringLiteral("kde")));
+    QApplication::setWindowIcon(QIcon::fromTheme(QStringLiteral("start-here-sonicde")));
 
     QQmlApplicationEngine engine;
-    engine.rootContext()->setContextObject(new KLocalizedContext(&engine));
+    KLocalization::setupLocalizedContext(&engine);
     engine.loadFromModule("org.kde.addonsexample", "Main");
     app.exec();
 }

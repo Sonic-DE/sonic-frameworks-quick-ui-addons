@@ -83,25 +83,25 @@ FormCardPage {
     /*!
        \brief This property holds a link to a "Get Involved" page.
 
-       Default: "https://community.kde.org/Get_Involved" when the
-       application ID starts with "org.kde.", otherwise empty.
+       Default: "https://github.com/Sonic-DE" when the application ID
+       starts with "org.sonicde." or "org.kde.", otherwise empty.
      */
     property url getInvolvedUrl: {
         if (aboutData.hasOwnProperty("url") && aboutData.url(Core.AboutUrlType?.Contribute) !== "")
             return aboutData.url(Core.AboutUrlType?.Contribute);
-        return aboutData.desktopFileName.startsWith("org.kde.") ? "https://community.kde.org/Get_Involved" : "";
+        return /^org\.(sonicde|kde)\./.test(aboutData.desktopFileName) ? "https://github.com/Sonic-DE" : "";
     }
 
     /*!
        \brief This property holds a link to a "Donate" page.
 
-       Default: "https://www.kde.org/donate" when the
-       application ID starts with "org.kde.", otherwise empty.
+       Default: the application's KAboutData donation URL, otherwise empty,
+       as SonicDE has no donation page yet.
      */
     property url donateUrl: {
         if (page.aboutData.hasOwnProperty("url") && aboutData.url(Core.AboutUrlType?.Donation) !== "")
             return aboutData.url(Core.AboutUrlType?.Donation);
-        return aboutData.desktopFileName.startsWith("org.kde.") ? "https://www.kde.org/donate" : ""
+        return "";
     }
 
     /*!

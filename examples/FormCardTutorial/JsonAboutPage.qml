@@ -1,5 +1,4 @@
 import org.kde.kirigamiaddons.formcard as FormCard
-import org.kde.about
 
 FormCard.AboutPage {
     title: i18nc("@action:button", "About")
@@ -7,8 +6,8 @@ FormCard.AboutPage {
         "displayName" : "Addons Example",
         "productName" : "",
         "componentName" : "addonsexample",
-        "shortDescription" : "This program shows how to use AboutKDE and AboutPage",
-        "homepage" : "https://kde.org",
+        "shortDescription" : "This program shows how to use AboutPage",
+        "homepage" : "https://sonicde.org",
         "bugAddress" : "",
         "version" : "1.0",
         "otherText" : "Optional text shown in the About",
@@ -30,6 +29,7 @@ FormCard.AboutPage {
                 "spdx" : "GPL-3.0"
             }
         ],
+        "releases" : [],
         "copyrightStatement" : "© 2023",
         "desktopFileName" : ""
     }

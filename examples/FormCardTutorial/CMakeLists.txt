@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.20)
 
 project(FormCardTutorial)
 
-find_package(ECM REQUIRED NO_MODULE)
+find_package(ECM 6.0.0 REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
 
 include(KDEInstallDirs)
@@ -17,7 +17,7 @@ find_package(Qt6 REQUIRED COMPONENTS
 )
 find_package(KF6 REQUIRED COMPONENTS
     CoreAddons # For KAboutData
-    I18n       # For KLocalizedContext
+    I18n       # For KLocalization
 )
 qt_policy(SET QTP0001 NEW)
 
@@ -42,6 +42,7 @@ target_link_libraries(addonsexample PRIVATE
     Qt::QuickControls2
     KF6::CoreAddons
     KF6::I18n
+    KF6::I18nQml
 )
 
 install(TARGETS addonsexample DESTINATION ${KDE_INSTALL_BINDIR})
